@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>FitTrack — Health & Fitness App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1>💪 FitTrack</h1>
+    <p>Search exercises & nutrition data</p>
+  </header>
+
+  <main>
+    <!-- TABS -->
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('exercises')">🏋️ Exercises</button>
+      <button class="tab" onclick="switchTab('nutrition')">🥗 Nutrition</button>
+    </div>
+
+    <!-- EXERCISES PANEL -->
+    <section id="exercises-panel">
+      <div class="controls">
+        <select id="muscle-select">
+          <option value="chest">Chest</option>
+          <option value="back">Back</option>
+          <option value="shoulders">Shoulders</option>
+          <option value="upper arms">Arms</option>
+          <option value="upper legs">Legs</option>
+          <option value="cardio">Cardio</option>
+          <option value="core">Core</option>
+        </select>
+        <input type="text" id="exercise-search" placeholder="Filter by name..." />
+        <button onclick="fetchExercises()">Search</button>
+      </div>
+      <div id="exercise-error" class="error hidden"></div>
+      <div id="exercise-loader" class="loader hidden">Loading...</div>
+      <table id="exercise-table" class="hidden">
+        <thead>
+          <tr>
+            <th onclick="sortTable('exercise', 'name')">Exercise ↕</th>
+            <th onclick="sortTable('exercise', 'equipment')">Equipment ↕</th>
+            <th onclick="sortTable('exercise', 'target')">Target Muscle ↕</th>
+          </tr>
+        </thead>
+        <tbody id="exercise-body"></tbody>
+      </table>
+    </section>
+
+    <!-- NUTRITION PANEL -->
+    <section id="nutrition-panel" class="hidden">
+      <div class="controls">
+        <input type="text" id="food-input" placeholder="Search a food (e.g. banana)..." />
+        <button onclick="fetchNutrition()">Search</button>
+      </div>
+      <div id="nutrition-error" class="error hidden"></div>
+      <div id="nutrition-loader" class="loader hidden">Loading...</div>
+      <table id="nutrition-table" class="hidden">
+        <thead>
+          <tr>
+            <th onclick="sortTable('nutrition', 'food_name')">Food ↕</th>
+            <th onclick="sortTable('nutrition', 'serving_unit')">Serving ↕</th>
+            <th onclick="sortTable('nutrition', 'calories')">Calories ↕</th>
+          </tr>
+        </thead>
+        <tbody id="nutrition-body"></tbody>
+      </table>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
