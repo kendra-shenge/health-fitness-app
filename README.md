@@ -41,11 +41,11 @@ health-fitness-app/
 
 ---
 
-## ⚙️ Setup & Installation
+## ⚙️ How to Run Locally
 
 ### 1. Clone the repository
 ```
-git clone <your-repo-url>
+git clone https://github.com/kendra-shenge/health-fitness-app.git
 cd health-fitness-app
 ```
 
@@ -74,12 +74,93 @@ Open `frontend/index.html` using **Go Live** in VS Code or any local server.
 
 ---
 
-## 🔑 API Keys
+## 🌐 Deployment to Web Servers
 
-| API | Where to get it |
-|-----|----------------|
-| RapidAPI (ExerciseDB) | [rapidapi.com](https://rapidapi.com) |
-| API Ninjas | [api-ninjas.com](https://api-ninjas.com) |
+### Server Details
+| Server | Username | IP Address |
+|--------|----------|------------|
+| web-01 | ubuntu | 44.201.204.119 |
+| web-02 | ubuntu | 3.91.200.7 |
+| lb-01 (Load Balancer) | ubuntu | 35.171.3.130 |
+
+### 1. SSH into your web server
+```
+ssh ubuntu@44.201.204.119
+```
+
+### 2. Install Node.js on the server
+```
+curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
+sudo apt-get install -y nodejs
+```
+
+### 3. Clone the repository on the server
+```
+git clone https://github.com/kendra-shenge/health-fitness-app.git
+cd health-fitness-app/backend
+```
+
+### 4. Install dependencies
+```
+npm install
+```
+
+### 5. Create `.env` file on the server
+```
+nano .env
+```
+Add your API keys:
+```
+RAPIDAPI_KEY=your_rapidapi_key_here
+NINJA_API_KEY=your_ninja_api_key_here
+```
+
+### 6. Start the server with PM2
+```
+sudo npm install -g pm2
+pm2 start server.js
+pm2 save
+pm2 startup
+```
+
+### 7. Access via Load Balancer
+Once both web servers are running, access the app at:
+```
+http://35.171.3.130
+```
 
 ---
 
+## 🔑 API Keys
+
+| API | Documentation | Where to get keys |
+|-----|--------------|-------------------|
+| ExerciseDB (RapidAPI) | [docs](https://rapidapi.com/justin-tool/api/exercisedb) | [rapidapi.com](https://rapidapi.com) |
+| API Ninjas Nutrition | [docs](https://api-ninjas.com/api/nutrition) | [api-ninjas.com](https://api-ninjas.com) |
+
+---
+
+## 😓 Challenges & Solutions
+
+- **Nutritionix API discontinued free tier** — Switched to API Ninjas Nutrition API which offers a free tier with reliable data.
+- **CORS errors** — Added the `cors` npm package to the Express backend to allow frontend requests.
+- **Environment variables** — Used `dotenv` package to securely manage API keys without exposing them in the codebase.
+- **File protocol blocking fetch requests** — Had to use a local server (Go Live) instead of opening HTML directly in the browser.
+
+---
+
+## 🙏 Credits
+
+- [ExerciseDB by Justin](https://rapidapi.com/justin-tool/api/exercisedb) — Exercise data API
+- [API Ninjas](https://api-ninjas.com) — Nutrition data API
+- [Express.js](https://expressjs.com) — Backend framework
+- [Axios](https://axios-http.com) — HTTP client for API requests
+- [dotenv](https://www.npmjs.com/package/dotenv) — Environment variable management
+- [cors](https://www.npmjs.com/package/cors) — Cross-origin resource sharing middleware
+
+---
+
+## 👩‍💻 Author
+
+**Kendra Shenge**
+- GitHub: [kendra-shenge](https://github.com/kendra-shenge)
